@@ -35,7 +35,11 @@ const HealthCard = ({ apiName }) => {
         if (!response.ok) {
           if (response.status === 503) {
             setIsLoading(false);
-            setApiData({ message: 'This endpoint has been deprecated' })
+            setApiData({
+              status: response?.status,
+              message: 'This endpoint has been deprecated'
+            })
+            return;
           }
         }
         const data = await response.json();
@@ -81,7 +85,7 @@ text-align: center;
 display: flex;
 flex-direction: column;
 opacity: ${({ isVisible }) => isVisible ? 1 : 0};
-transform: translateX(${({ isVisible }) => isVisible ? 0 : '20px'});
+transform: translateX(${({ isVisible }) => isVisible ? 0 : '40px'});
 transition: 150ms;
 `
 
