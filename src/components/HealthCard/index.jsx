@@ -10,6 +10,7 @@ const HealthCard = ({ apiName }) => {
     if (node !== null) {
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
+          console.log(entry);
           if (entry.isIntersecting) {
             setIsVisible(true);
           }
@@ -17,7 +18,7 @@ const HealthCard = ({ apiName }) => {
             setIsVisible(false);
           }
         });
-      }, { threshold: 0.20 });
+      }, { threshold: 0.20, rootMargin: '10px' });
       observer.observe(node);
     }
   }, [])
@@ -26,7 +27,7 @@ const HealthCard = ({ apiName }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/${apiName}/health/status`, {
+        const response = await fetch(`${import.meta.env.VITE_FOURTYFOUR_API_BASE_URL}/${apiName}/health/status`, {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
@@ -81,7 +82,7 @@ text-align: center;
 display: flex;
 flex-direction: column;
 opacity: ${({ isVisible }) => isVisible ? 1 : 0};
-transform: translate(${({ isVisible }) => isVisible ? 0 : '10px , 20px'});
+transform: translateX(${({ isVisible }) => isVisible ? 0 : '20px'});
 transition: 150ms;
 `
 
